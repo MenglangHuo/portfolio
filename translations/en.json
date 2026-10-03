@@ -29,7 +29,7 @@
         }
     },
     "buttons": {
-        "hire_me": "Hire Me"
+        "hire_me": ""
     },
     "auth": {
         "login": {

@@ -1,19 +1,22 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { Volume2, VolumeX, Music } from "lucide-react";
+import { VolumeX } from "lucide-react";
+
+const TARGET_VOLUME = 0.20; // 20% of original volume
 
 export default function BackgroundAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
+  const [, setHasInteracted] = useState(false);
 
   useEffect(() => {
     const audio = new Audio("/assets/audio/sound-background.mp3");
-    audio.volume = 0.20; // 50% reduced volume (15%)
-    audio.loop = true;  // loop when finished playing
+    audio.volume = TARGET_VOLUME; // 20% of original volume
+    audio.loop = true; // loop when finished playing
     audioRef.current = audio;
+
+    let cleanupListeners: (() => void) | null = null;
 
     const playPromise = audio.play();
     if (playPromise !== undefined) {
@@ -27,12 +30,18 @@ export default function BackgroundAudio() {
 
           const startAudioOnInteraction = () => {
             if (audioRef.current && audioRef.current.paused) {
-              audioRef.current.volume = 0.15;
+              audioRef.current.volume = TARGET_VOLUME;
               audioRef.current.play().then(() => {
                 setIsPlaying(true);
                 setHasInteracted(true);
               }).catch(() => {});
             }
+            if (cleanupListeners) {
+              cleanupListeners();
+            }
+          };
+
+          cleanupListeners = () => {
             window.removeEventListener("click", startAudioOnInteraction);
             window.removeEventListener("touchstart", startAudioOnInteraction);
             window.removeEventListener("keydown", startAudioOnInteraction);
@@ -45,6 +54,9 @@ export default function BackgroundAudio() {
     }
 
     return () => {
+      if (cleanupListeners) {
+        cleanupListeners();
+      }
       audio.pause();
       audio.src = "";
     };
@@ -59,7 +71,7 @@ export default function BackgroundAudio() {
       audio.pause();
       setIsPlaying(false);
     } else {
-      audio.volume = 0.15;
+      audio.volume = TARGET_VOLUME;
       audio.play().then(() => {
         setIsPlaying(true);
       }).catch((err) => {
@@ -73,7 +85,7 @@ export default function BackgroundAudio() {
       <button
         onClick={togglePlay}
         aria-label={isPlaying ? "Pause healing sound" : "Play healing sound"}
-        title={isPlaying ? "Healing Sound · Playing" : "Healing Sound · Click to Play"}
+        title={isPlaying ? "Healing Sound · Playing (20% volume)" : "Healing Sound · Click to Play"}
         className="group relative flex items-center gap-2 px-3 py-2 rounded-full border border-[#cfc3ad] bg-[#f8f4eb]/90 hover:bg-[#efe6d5] shadow-md backdrop-blur-sm transition-all duration-300 hover:scale-105"
       >
         {/* Animated Sound Wave or Music Note Indicator */}
