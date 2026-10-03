@@ -11,7 +11,7 @@ export default function BackgroundAudio() {
 
   useEffect(() => {
     const audio = new Audio("/assets/audio/sound-background.mp3");
-    audio.volume = 0.15; // 50% reduced volume (15%)
+    audio.volume = 0.20; // 50% reduced volume (15%)
     audio.loop = true;  // loop when finished playing
     audioRef.current = audio;
 
