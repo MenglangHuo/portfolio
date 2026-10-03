@@ -2,11 +2,25 @@
     "startYear": "2021",
     "experience": [
          {
+            "company": "Bronx Technology",
+            "position": "Software Engineer",
+            "period": {
+                "start": "សីហា 2025",
+                "finish": "បច្ចុប្បន្ន"
+            },
+            "description": [
+                "ធ្វើបច្ចុបន្នភាព System ដែលមានស្រាប់ ដើម្បីបង្កើតមុខងារថ្មីៗ និងកែលម្អប្រព័ន្ធ អោយកាន់តែប្រសើរឡើង",
+                "វិភាគនិងបង្កើត Database Schema សម្រាប់ប្រព័ន្ធថ្មីៗទៅតាមតម្រូវការអ្នកប្រើប្រាស់",
+                "បង្កើត System ថ្មីៗទៅតាមតម្រូវការ",
+                "ស្រាវជ្រាវនូវ Technology ថ្មីៗ ដើម្បីអភិវឌ្ឍប្រព័ន្ធអោយកាន់តែប្រសើរឡើង"
+            ]
+        },
+         {
             "company": "ធនាគា​ កាណាឌីយ៉ា​ មក",
             "position": "System Developer",
             "period": {
                 "start": "វិច្ឆិកា 2023",
-                "finish": "បច្ចុប្បន្ន"
+                "finish": "សីហា 2025"
             },
             "description": [
                 "បង្កើត API សម្រាប់ ទាក់ទងជាមួយ ប្រព័ន្វប្រើប្រាស់ក្នុងធនាគា ដូចជា Middleware and Backend",

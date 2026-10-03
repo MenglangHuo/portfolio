@@ -1,99 +1,149 @@
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { cn } from "@/lib/utils";
-import { SkillItem, Skills as SkillsType } from "@/shared/types/skills";
-import * as motion from "framer-motion/client";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
+import * as motion from 'framer-motion/client'
+import { useLocale, useTranslations } from 'next-intl'
+import Image from 'next/image'
+import { Skills as SkillsType, SkillItem } from '@/shared/types/skills'
 
-const SkillCategoryWidget: React.FC<{ title: string, items: SkillItem[], folder: string, id: number }> = ({ title, items, folder, id }) => {
+interface SkillCategoryItemProps {
+    category: SkillsType
+    id: number
+    isKh: boolean
+}
+
+const SkillCategoryItem: React.FC<SkillCategoryItemProps> = ({ category, id, isKh }) => {
     return (
         <motion.div
+            className='relative w-full pl-8'
             variants={{
-                hidden: { opacity: 0 },
+                hidden: { opacity: 0, y: 20 },
                 visible: {
                     opacity: 1,
+                    y: 0,
                     transition: {
-                        delay: id * 0.1,
-                        once: true
-                    }
-                }
+                        delay: id * 0.15,
+                        once: true,
+                    },
+                },
             }}
+            viewport={{ once: true }}
             initial='hidden'
             animate='visible'
-            viewport={{ once: true }}
-            className={cn(
-                'backdrop-blur-md',
-                'bg-main-mid-light dark:bg-alter-mid-light border-2 border-main-dark dark:border-alter-light',
-                // 'bg-main-mid dark:bg-alter-mid-light border-2 border-main-dark dark:border-alter-light',
-                'rounded-xl h-full cursor-grab',
-            )}
         >
-            <div className='p-3 border-b-2 border-main-dark dark:border-alter-light'>
-                <h6>{title}</h6>
+            {/* Timeline Branch Node */}
+            <div className='flex items-center absolute top-3.5 -left-[3.5px] -translate-y-1/2'>
+                <div className='size-3 bg-main dark:bg-alter rounded-full border-2 border-main-dark dark:border-alter-light border-solid z-10'></div>
+                <div className='w-5 border-2 border-main-mid dark:border-alter-light border-solid rounded-r-full -ml-1'></div>
             </div>
-            <div className='grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] p-5 gap-5 min-w-[300px]'>
-                {items.map((item, index) => (
-                    <div key={index}>
-                        <div className='flex flex-col items-center rounded-lg p-3'>
-                            {item.altIcon ? (
-                                <>
-                                    <Image src={`/assets/icons/${folder}/${item.icon}`} alt={item.altIcon} width={32} height={32} className='mb-2 dark:hidden' />
-                                    <Image src={`/assets/icons/${folder}/${item.altIcon}`} alt={item.altIcon} width={32} height={32} className='mb-2 hidden dark:block' />
-                                </>
-                            ) : (
-                                <Image src={`/assets/icons/${folder}/${item.icon}`} alt={item.icon} width={32} height={32} className='mb-2' />
-                            )}
-                            <span className='text-xs font-medium text-center'>{item.title}</span>
-                        </div>
-                    </div>
-                ))}
+
+            {/* Category Header */}
+            <div>
+                <h2 className={`text-xl md:text-2xl font-bold text-alter dark:text-main ${isKh ? 'font-hanuman' : 'font-antique'}`}>
+                    {category.title}
+                </h2>
+                <p className='text-xs md:text-sm text-alter-light/70 dark:text-main-light/60 mt-0.5 mb-4'>
+                    {category.folder === 'backend'
+                        ? (isKh ? 'ស្ថាបត្យកម្មប្រព័ន្ធកម្រិតខ្ពស់ Backend & Frontend' : 'Enterprise architecture, distributed microservices & modern web')
+                        : (isKh ? 'ដំណើរការគ្រប់គ្រងម៉ាស៊ីនមេន បណ្តាញ និងពពក' : 'Cloud orchestration, containerization & infrastructure')}
+                </p>
+
+                {/* Interactive Listing (No cards, no boxes) */}
+                <div className='flex flex-col divide-y divide-main-dark/10 dark:divide-alter-light/10'>
+                    {category.stack.map((item: SkillItem, index: number) => (
+                        <motion.div
+                            key={index}
+                            whileHover={{ x: 6 }}
+                            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                            className='group flex items-center justify-between py-3 px-2 rounded-lg transition-colors hover:bg-main-mid/25 dark:hover:bg-alter-mid/20 cursor-default'
+                        >
+                            <div className='flex items-center gap-3.5'>
+                                <div className='size-8 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-115 group-hover:rotate-3'>
+                                    {item.altIcon ? (
+                                        <>
+                                            <Image
+                                                src={`/assets/icons/${category.folder}/${item.icon}`}
+                                                alt={item.title}
+                                                width={28}
+                                                height={28}
+                                                unoptimized
+                                                className='dark:hidden object-contain'
+                                            />
+                                            <Image
+                                                src={`/assets/icons/${category.folder}/${item.altIcon}`}
+                                                alt={item.title}
+                                                width={28}
+                                                height={28}
+                                                unoptimized
+                                                className='hidden dark:block object-contain'
+                                            />
+                                        </>
+                                    ) : (
+                                        <Image
+                                            src={`/assets/icons/${category.folder}/${item.icon}`}
+                                            alt={item.title}
+                                            width={28}
+                                            height={28}
+                                            unoptimized
+                                            className='object-contain'
+                                        />
+                                    )}
+                                </div>
+                                <span className='text-sm sm:text-base font-medium text-alter/90 dark:text-main/90 group-hover:text-alter dark:group-hover:text-main transition-colors'>
+                                    {item.title}
+                                </span>
+                            </div>
+
+                            <div className='flex items-center gap-1.5 text-xs text-alter-light/60 dark:text-main-light/50 font-mono opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
+                                <span className='hidden sm:inline'>{isKh ? 'ជំនាញស្នូល' : 'Core Tech'}</span>
+                                <span className='text-[#a8743d] dark:text-[#d1a36a]'>✦</span>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
             </div>
         </motion.div>
-    );
-};
+    )
+}
 
 export default function Skills({ data }: { data: SkillsType[] }) {
     const t = useTranslations('about.skills')
+    const locale = useLocale()
+    const isKh = locale === 'kh'
 
     return (
-        <div>
-            <h1 className='text-2xl md:text-3xl font-bold text-center'>
+        <div className='py-4 md:py-8'>
+            <h1 className={`text-2xl md:text-3xl font-bold text-center mb-10 ${isKh ? 'font-hanuman' : 'font-antique'}`}>
                 {t('title')}
             </h1>
-            <div className='mt-5'>
-                <Carousel
-                    className='h-full w-full mx-auto'
-                >
-                    <CarouselContent className='-ml-5'>
-                        {data.map((category, index) => (
-                            <CarouselItem
-                                key={index}
-                                className='basis-full md:basis-1/2 lg:basis-1/3 pl-5'
-                            >
-                                <SkillCategoryWidget
-                                    title={category.title}
-                                    items={category.stack}
-                                    folder={category.folder}
-                                    id={index}
-                                />
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    <CarouselPrevious
-                        className={cn(
-                            'absolute top-1/2 left-0 transform -translate-y-1/2 -translate-x-1/4 md:-translate-x-1/2 border-2',
-                            'bg-main-mid-light hover:bg-main border-main-dark text-alter/60',
-                            'dark:bg-alter dark:hover:bg-alter-mid-light dark:border-alter-light dark:text-main/70',
-                        )}
-                    />
-                    <CarouselNext
-                        className={cn(
-                            'absolute top-1/2 right-0 transform -translate-y-1/2 translate-x-1/4 md:translate-x-1/2 border-2',
-                            'bg-main-mid-light hover:bg-main border-main-dark text-alter/60',
-                            'dark:bg-alter dark:hover:bg-alter-mid-light dark:border-alter-light dark:text-main/70',
-                        )}
-                    />
-                </Carousel>
+
+            <div className='relative max-w-[700px] mx-auto pl-3'>
+                {/* Vertical Timeline Bar */}
+                <div className='absolute top-0 left-3 h-full border-2 border-main-mid dark:border-alter-light border-solid rounded-full'>
+                    {/* Top Marker */}
+                    <div className='absolute -top-2.5 -left-2.5 flex items-center gap-3'>
+                        <div className='size-5 bg-main dark:bg-alter rounded-full border-4 border-main-dark dark:border-alter-light border-solid'></div>
+                        <div className='text-alter/60 dark:text-main text-xs sm:text-sm font-semibold whitespace-nowrap'>
+                            {isKh ? 'បច្ចេកវិទ្យាស្នូល' : 'Tech Stack'}
+                        </div>
+                    </div>
+                    {/* Bottom Marker */}
+                    <div className='absolute -bottom-2.5 -left-2.5 flex items-center gap-3'>
+                        <div className='size-5 bg-main dark:bg-alter rounded-full border-4 border-main-dark dark:border-alter-light border-solid'></div>
+                        <div className='text-alter/60 dark:text-main text-xs sm:text-sm font-semibold whitespace-nowrap'>
+                            {isKh ? 'ការសិក្សាជាប្រចាំ' : 'Continuous Learning'}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Timeline Category Listing */}
+                <div className='py-12 space-y-14'>
+                    {data.map((category, index) => (
+                        <SkillCategoryItem
+                            key={index}
+                            category={category}
+                            id={index}
+                            isKh={isKh}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     )

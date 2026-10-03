@@ -1,6 +1,20 @@
 {
     "startYear": "2021",
     "experience": [
+                 {
+            "company": "Bronx Technology",
+            "position": "Software Engineer",
+            "period": {
+                "start": "Aug 2025",
+                "finish": "Present"
+            },
+            "description": [
+                "Updating Systems with new features and improving existing functionality",
+                "Analyzing and creating Database Schemas for new systems based on user requirements",
+                "Building new systems based on user requirements",
+                "Researching new technologies to improve system performance"
+            ]
+        },
          {
             "company": "Canadia Bank",
             "position": "System Developer",

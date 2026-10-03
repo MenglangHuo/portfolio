@@ -5,9 +5,10 @@
     },
     "navigation": {
         "home": "Home",
+        "skills": "Skills",
         "experience": "Experience",
         "projects": "Projects",
-        "education":"Educations"
+        "education": "Educations"
     },
     "about": {
         "skills": {

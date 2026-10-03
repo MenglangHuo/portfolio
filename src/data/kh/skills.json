@@ -1,158 +1,42 @@
 [
-    {
-        "title": "ភាសា",
-        "folder": "langs",
-        "stack": [
-            {
-                "title": "JavaScript",
-                "icon": "js.svg"
-            },
-            {
-                "title": "TypeScript",
-                "icon": "ts.svg"
-            },
-            {
-                "title": "Java",
-                "icon": "java.svg"
-            }
-        ]
-    },
+   
     
-    {
-        "title": "ការបង្កើតគេហទំព័រផ្នែកខាងក្រោយ",
+     {
+        "title": "ការអភិវឌ្ឍកម្មវិធី",
         "folder": "backend",
         "stack": [
-        
+          
             {
                 "title": "SpringBoot Microservice",
                 "icon": "springboot.svg"
-            }
-        ]
-    },
-    {
-        "title": "ដំណើារការអភិវឌ្ឍកម្មវិធី",
-        "folder": "devops",
-        "stack": [
-         {
-                "title": "GitHub",
-                "icon": "github-light.svg",
-                "altIcon": "github-dark.svg"
             },
             {
-                "title": "NestJS",
-                "icon": "nestjs.svg"
+                "title": "FastAPI",
+                "icon": "fastapi.svg"
             },
-            {
-                "title": "Kubernetes",
-                "icon": "kubernetes.svg"
-            }
-        ]
-    },
-    {
-        "title": "ការគ្រប់គ្រងទិន្ន័យ",
-        "folder": "db",
-        "stack": [
-            {
-                "title": "MySQL",
-                "icon": "mysql.svg"
-            },
-            {
-                "title": "PostgreSQL",
-                "icon": "postgresql.svg"
-            },
-            
-            {
-                "title": "Redis",
-                "icon": "redis.svg"
-            }
-        ]
-    },
-    {
-        "title": "ការបង្កើតគេហទំព័រផ្នែកខាងមុខ",
-        "folder": "frontend",
-        "stack": [
-            {
-                "title": "ReactJS",
-                "icon": "reactjs.svg"
+             {
+                "title": "VueJS",
+                "icon": "vuejs.svg"
             },
             {
                 "title": "NextJS",
                 "icon": "nextjs-light.svg",
                 "altIcon": "nextjs-dark.svg"
             },
-            {
-                "title": "HTML",
-                "icon": "html.svg"
-            },
-            {
-                "title": "CSS",
-                "icon": "css.svg"
+                        {
+                "title": "PostgreSQL",
+                "icon": "postgresql.svg"
             }
         ]
     },
     {
-        "title": "ការរចនាគេហទព័រ",
-        "folder": "ui",
-        "stack": [
-            {
-                "title": "Radix UI",
-                "icon": "radixui-light.svg",
-                "altIcon": "radixui-dark.svg"
-            },
-            {
-                "title": "Shadcn UI",
-                "icon": "shadcnui-light.svg",
-                "altIcon": "shadcnui-dark.svg"
-            },
-            {
-                "title": "Tailwind CSS",
-                "icon": "tailwind.svg"
-            },
-            {
-                "title": "Bootstrap",
-                "icon": "bootstrap-light.svg",
-                "altIcon": "bootstrap-dark.svg"
-            },
-            {
-                "title": "Material UI",
-                "icon": "materialui.svg"
-            }
-        ]
-    },
-    {
-        "title": "ឧបករណ៍",
-        "folder": "tools",
-        "stack": [
-           
-            {
-                "title": "Jira",
-                "icon": "jira-light.svg",
-                "altIcon": "jira-dark.svg"
-            },
-            {
-                "title": "npm",
-                "icon": "npm.svg"
-            },
-            {
-                "title": "Postman",
-                "icon": "postman.svg"
-            },
-        
-            {
-                "title": "VSCode",
-                "icon": "vscode.svg"
-            }
-        ]
-    },
-    {
-        "title": "ដំណើារការអភិវឌ្ឍកម្មវិធី",
+        "title": "ដំណើរការគ្រប់គ្រងម៉ាស៊ីនមេននិងបណ្តាញ",
         "folder": "devops",
         "stack": [
-           
-            {
-                "title": "GitHub",
-                "icon": "github-light.svg",
-                "altIcon": "github-dark.svg"
+        {
+                "title": "AWS",
+                "icon": "aws-light.svg",
+                "altIcon": "aws-dark.svg"
             },
             {
                 "title": "Docker",

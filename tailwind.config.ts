@@ -85,13 +85,13 @@ const config: Config = {
                 // dun: '#CBC0AD',
                 // 'dun-dark': '#BFB39B',
                 // 'dun-light': '#D7CFC1',
-                main: '#D7D9CE',
-                'main-mid': '#D0D3C5',
+                main: '#E8DFD0',
+                'main-mid': '#DED4C3',
                 
                 // 'main-mid': '#C7CABA',
-                'main-dark': '#BDC1AE',
-                'main-mid-light': '#DEE0D7',
-                'main-light': '#E3E4DC',
+                'main-dark': '#CCC1AE',
+                'main-mid-light': '#EDE5D8',
+                'main-light': '#F2EBE0',
                 // EBECE7
 
                 ochre: '#DB7C26',

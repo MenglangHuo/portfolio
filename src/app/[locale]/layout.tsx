@@ -8,43 +8,62 @@ import dynamic from 'next/dynamic'
 import { Kantumruy_Pro } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 
+import type { Metadata } from 'next'
+
 import './globals.css'
 
 const Kantumruy = Kantumruy_Pro({ subsets: ['khmer', 'latin'] })
 
-export const metadata = {
+export const metadata: Metadata = {
+  metadataBase: new URL('https://portfolio-huomenglang.vercel.app'),
   title: {
-    default: 'Huo Menglang - System Developer',
-    template: '%s - Portfolio',
+    default: 'Huo Menglang - Fullstack System Developer',
+    template: '%s - Huo Menglang Portfolio',
   },
-  description: 'Experienced fullstack developer...',
-  icons: '/favicon.ico',
-  applicationName: 'Menglang',
+  description: 'Fullstack System Developer specializing in distributed systems, Spring Boot, Next.js, and cloud architecture. Dedicated to building resilient software crafts.',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/favicons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+  },
+  manifest: '/manifest.json',
+  applicationName: 'Huo Menglang Portfolio',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Huo Menglang - System Developer',
-    startupImage: 'favicons/apple-touch-icon.png',
+    title: 'Huo Menglang Portfolio',
+    startupImage: '/apple-icon.png',
   },
   formatDetection: {
     telephone: false,
   },
   openGraph: {
     type: 'website',
-    siteName: 'Menglang',
-    title: {
-      default: 'Huo Menglang - System Developer',
-      template: '%s - Portfolio',
-    },
-    description: 'Experienced fullstack developer...',
+    siteName: 'Huo Menglang Portfolio',
+    title: 'Huo Menglang - Fullstack System Developer',
+    description: 'Fullstack System Developer specializing in distributed systems, Spring Boot, Next.js, and cloud architecture. Dedicated to building resilient software crafts.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Huo Menglang - Fullstack System Developer Portfolio',
+      },
+    ],
   },
   twitter: {
-    card: 'summary',
-    title: {
-      default: 'Huo Menglang - System Developer',
-      template: '%s - Portfolio',
-    },
-    description: 'Experienced fullstack developer...',
+    card: 'summary_large_image',
+    title: 'Huo Menglang - Fullstack System Developer',
+    description: 'Fullstack System Developer specializing in distributed systems, Spring Boot, Next.js, and cloud architecture. Dedicated to building resilient software crafts.',
+    images: ['/og-image.png'],
   },
 }
 
@@ -61,7 +80,7 @@ export default async function RootLayout({
 }) {
   const messages = await getMessages()
 const locale=(await params).locale;
-  const theme= (await cookies()).get('__theme__')?.value || 'system'
+  const theme = 'light'
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -74,11 +93,11 @@ const locale=(await params).locale;
       <body
         className={cn(
           Kantumruy.className,
-          'text-alter-light dark:text-main',
-          'antialiased bg-main dark:bg-alter bg-[radial-gradient(#C7CABA_1px,transparent_1px)] dark:bg-[radial-gradient(#3D3D3D8f_1px,transparent_1px)] [background-size:20px_20px]'
+          'text-alter-light',
+          'antialiased bg-main bg-[radial-gradient(#C7CABA_1px,transparent_1px)] [background-size:20px_20px]'
         )}
       >
-        <AppThemeProvider attribute='class' defaultTheme={theme} enableSystem>
+        <AppThemeProvider attribute='class' defaultTheme='light' forcedTheme='light' enableSystem={false}>
           <NextIntlClientProvider messages={messages}>
             {children}
             <SpeedInsights />

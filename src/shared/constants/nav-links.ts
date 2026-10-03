@@ -1,6 +1,4 @@
-import { NotebookPen } from "lucide-react";
-
-import { BriefcaseBusiness, User } from "lucide-react";
+import { BriefcaseBusiness, Code2, NotebookPen, User } from "lucide-react";
 
 export const links = [
     {
@@ -8,6 +6,12 @@ export const links = [
         path: '',
         label: 'home',
         icon: User,
+    },
+    {
+        href: '/skills',
+        path: 'skills',
+        label: 'skills',
+        icon: Code2,
     },
     {
         href: '/experience',

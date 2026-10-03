@@ -5,9 +5,10 @@
     },
     "navigation": {
         "home": "ទំព័រដើម",
+        "skills": "ជំនាញ",
         "experience": "បទពិសោធន៏",
         "projects": "ស្នាដៃ",
-     "education":"ការសិក្សា"
+        "education": "ការសិក្សា"
     },
     "about": {
         "skills": {

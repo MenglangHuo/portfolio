@@ -17,13 +17,13 @@ export default function BottomBar() {
     return !isDesktop && (
         <div className='fixed bottom-0 w-full p-2 md:p-5 z-50 block md:hidden'>
             <div className='p-1 rounded-xl backdrop-blur-xl bg-main-mid-light/90 dark:bg-alter-mid-light/90 shadow-md shadow-alter-dark/20 dark:shadow-alter-dark/80'>
-                <div className='w-full flex space-x-5'>
+                <div className='w-full flex items-center justify-around gap-1'>
                     {links.map((link, index) => (
                         <Link
                             key={index}
                             href={link.href}
                             className={cn(
-                                'nav-item w-1/3 h-12 flex flex-col items-center justify-center rounded-lg',
+                                'nav-item flex-1 h-12 flex flex-col items-center justify-center rounded-lg',
                                 currentPath === link.path && 'bg-main dark:bg-alter-light text-ochre dark:text-ochre'
                             )}
                         >
