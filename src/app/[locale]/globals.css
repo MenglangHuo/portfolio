@@ -500,3 +500,49 @@ body {
   inset: 0;
   transform-origin: 0 0;
 }
+
+/* =====================================================================
+   PROFILE PHOTO GALLERY & LUXURY AURA
+   ===================================================================== */
+
+@keyframes profile-luxury-aura {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.85;
+  }
+}
+
+.profile-luxury-aura {
+  animation: profile-luxury-aura 4s ease-in-out infinite;
+}
+
+/* Gallery scroll area custom scrollbar */
+.gallery-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.gallery-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gallery-scroll::-webkit-scrollbar-thumb {
+  background: rgba(141, 124, 101, 0.35);
+  border-radius: 999px;
+}
+
+.dark .gallery-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.gallery-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(219, 124, 38, 0.65);
+}
+
+.dark .gallery-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(219, 124, 38, 0.75);
+}

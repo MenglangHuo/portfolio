@@ -286,14 +286,17 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
       if (isAnimating) return;
       setIsAnimating(true);
       setTurnDirection(dir);
-      setFlippingPage(currentPage);
+      // Next flips the current page forward to the left.
+      // Prev flips the target (previous) page forward from the left spine to the right.
+      setFlippingPage(dir === "next" ? currentPage : targetPage);
 
       const startTime = performance.now();
-      const duration = 600;
+      const duration = 580;
 
       const step = (now: number) => {
         const elapsed = now - startTime;
         const progress = Math.min(1, elapsed / duration);
+        // Realistic ease with gentle deceleration at the end
         const eased =
           progress < 0.5
             ? 4 * progress * progress * progress
@@ -361,7 +364,7 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
       String(n).split("").map((d) => khmerDigits[parseInt(d)] || d).join("");
 
     return (
-      <div className={`relative w-full h-full flex flex-col px-5 py-4 sm:px-7 sm:py-5 select-none overflow-hidden ${fontClass}`}>
+      <div className={`relative w-full h-full flex flex-col px-4 pt-3.5 pb-2.5 sm:px-6 sm:pt-4 sm:pb-3 select-none overflow-hidden ${fontClass}`}>
         {/* Parchment Fiber Background */}
         <div
           className="absolute inset-0 pointer-events-none rounded-[2px]"
@@ -385,7 +388,7 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
 
         {/* Left Spine Gutter Shade */}
         <div
-          className="absolute left-0 top-0 bottom-0 w-8 sm:w-10 pointer-events-none z-20"
+          className="absolute left-0 top-0 bottom-0 w-7 sm:w-9 pointer-events-none z-20"
           style={{
             background:
               "linear-gradient(90deg, rgba(46,34,18,0.22) 0%, rgba(46,34,18,0.06) 45%, transparent 100%)",
@@ -393,20 +396,20 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
         />
 
         {/* Binding Stitch Guide */}
-        <div className="absolute left-3 top-3 bottom-3 w-[1px] border-l border-dashed border-[#8d7c65]/30 pointer-events-none z-20" />
+        <div className="absolute left-2.5 top-3 bottom-3 w-[1px] border-l border-dashed border-[#8d7c65]/30 pointer-events-none z-20" />
 
         {/* Right Page Edge */}
         <div
-          className="absolute right-0 top-0 bottom-0 w-6 pointer-events-none z-20"
+          className="absolute right-0 top-0 bottom-0 w-5 pointer-events-none z-20"
           style={{
             background: "linear-gradient(270deg, rgba(80,55,30,0.12) 0%, transparent 100%)",
           }}
         />
 
-        {/* Victorian Double Border Frame */}
-        <div className="absolute inset-2.5 sm:inset-3 md:inset-3.5 pointer-events-none z-15 select-none">
+        {/* Victorian Double Border Frame - fully encircling all content */}
+        <div className="absolute inset-1.5 sm:inset-2 md:inset-2.5 pointer-events-none z-15 select-none">
           <div className="absolute inset-0 border border-[#6b523c]/85 rounded-[1px]" />
-          <div className="absolute inset-[2.5px] border border-[#6b523c]/60 rounded-[1px]" />
+          <div className="absolute inset-[2px] border border-[#6b523c]/60 rounded-[1px]" />
 
           {/* 4 Corner Filigrees */}
           {[
@@ -415,7 +418,7 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
             { pos: "bottom-0 right-0", scale: "-scale-y-100" },
             { pos: "bottom-0 left-0", scale: "-scale-x-100 -scale-y-100" },
           ].map((corner, i) => (
-            <div key={i} className={`absolute ${corner.pos} w-[24px] h-[24px] sm:w-[28px] sm:h-[28px]`}>
+            <div key={i} className={`absolute ${corner.pos} w-[22px] h-[22px] sm:w-[26px] sm:h-[26px]`}>
               <img
                 src="/sketchbook/vintage-corner.png"
                 alt=""
@@ -431,16 +434,16 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
         {isOddPage ? (
           /* Odd pages: bottom-left */
           <div
-            className="absolute -bottom-1 -left-1 sm:-bottom-2 sm:-left-2 w-20 sm:w-28 md:w-32 pointer-events-none select-none z-10"
-            style={{ opacity: 0.42, mixBlendMode: "multiply", filter: "sepia(0.2) contrast(1.05)" }}
+            className="absolute -bottom-1 -left-1 sm:-bottom-2 sm:-left-2 w-16 sm:w-24 md:w-28 pointer-events-none select-none z-10"
+            style={{ opacity: 0.35, mixBlendMode: "multiply", filter: "sepia(0.2) contrast(1.05)" }}
           >
             <img src="/sketchbook/bloom.png" alt="" aria-hidden="true" className="w-full h-auto object-contain rotate-6" />
           </div>
         ) : (
           /* Even pages: top-right, flipped */
           <div
-            className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-20 sm:w-28 md:w-32 pointer-events-none select-none z-10"
-            style={{ opacity: 0.38, mixBlendMode: "multiply", filter: "sepia(0.3) hue-rotate(15deg) contrast(1.05)" }}
+            className="absolute -top-1 -right-1 sm:-top-2 sm:-right-2 w-16 sm:w-24 md:w-28 pointer-events-none select-none z-10"
+            style={{ opacity: 0.32, mixBlendMode: "multiply", filter: "sepia(0.3) hue-rotate(15deg) contrast(1.05)" }}
           >
             <img src="/sketchbook/bloom.png" alt="" aria-hidden="true" className="w-full h-auto object-contain -scale-x-100 -rotate-12" />
           </div>
@@ -448,33 +451,33 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
 
         {/* ============ CHAPTER TITLE (on first page of chapter) ============ */}
         {fp.isFirstPageOfChapter && (
-          <div className="relative z-20 pt-1 sm:pt-2 text-center space-y-1">
-            <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-[#7a6650] font-medium">
+          <div className="relative z-20 pt-0.5 sm:pt-1 text-center space-y-0.5">
+            <p className="text-[8.5px] sm:text-[9.5px] uppercase tracking-[0.28em] text-[#7a6650] font-medium">
               {chapterLabel}
             </p>
-            <h2 className="text-sm sm:text-base md:text-lg font-bold tracking-[0.12em] text-[#3a2a1a] uppercase leading-tight">
+            <h2 className="text-xs sm:text-sm md:text-base font-bold tracking-[0.1em] text-[#3a2a1a] uppercase leading-tight">
               {title}
             </h2>
-            <div className="w-[70%] max-w-[220px] h-[0.75px] bg-[#6b523c]/60 mx-auto mt-1" />
+            <div className="w-[65%] max-w-[200px] h-[0.75px] bg-[#6b523c]/60 mx-auto mt-0.5" />
           </div>
         )}
 
         {/* If NOT first page, show a running header */}
         {!fp.isFirstPageOfChapter && (
           <div className="relative z-20 pt-0.5 text-center">
-            <p className="italic text-[9px] sm:text-[10px] tracking-[0.2em] text-[#7a6650]">
+            <p className="italic text-[8.5px] sm:text-[9.5px] tracking-[0.2em] text-[#7a6650]">
               {title}
             </p>
-            <div className="w-[50%] max-w-[160px] h-[0.5px] bg-[#6b523c]/40 mx-auto mt-1" />
+            <div className="w-[45%] max-w-[150px] h-[0.5px] bg-[#6b523c]/40 mx-auto mt-0.5" />
           </div>
         )}
 
         {/* ============ PARAGRAPHS ============ */}
-        <div className="relative z-20 flex-1 flex flex-col justify-center space-y-3 sm:space-y-4 py-2 sm:py-3">
+        <div className="relative z-20 flex-1 flex flex-col justify-center space-y-2 sm:space-y-2.5 py-1.5 sm:py-2">
           {paragraphs.map((text, idx) => (
             <p
               key={idx}
-              className="text-[10.5px] sm:text-[12px] md:text-[13px] leading-[1.7] sm:leading-[1.8] text-[#2c241c] text-justify px-1 sm:px-2"
+              className="text-[9.5px] sm:text-[11px] md:text-[12px] leading-[1.65] sm:leading-[1.75] text-[#2c241c] text-justify px-1 sm:px-1.5"
             >
               {text}
             </p>
@@ -482,18 +485,18 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
         </div>
 
         {/* ============ DIVIDER ============ */}
-        <div className="relative z-20 flex items-center justify-center gap-2 text-[#9a8166]/50">
-          <span className="w-6 sm:w-10 h-[0.5px] bg-[#9a8166]/25" />
-          <span className="text-[10px] select-none leading-none">❧</span>
-          <span className="w-6 sm:w-10 h-[0.5px] bg-[#9a8166]/25" />
+        <div className="relative z-20 flex items-center justify-center gap-2 text-[#9a8166]/50 my-0.5">
+          <span className="w-5 sm:w-8 h-[0.5px] bg-[#9a8166]/25" />
+          <span className="text-[9px] select-none leading-none">❧</span>
+          <span className="w-5 sm:w-8 h-[0.5px] bg-[#9a8166]/25" />
         </div>
 
         {/* ============ BOTTOM: Attribution + Nav + Page Number ============ */}
-        <div className="relative z-20 pt-1 pb-0.5 space-y-1">
+        <div className="relative z-20 pt-0.5 pb-0.5 space-y-0.5 mt-auto">
           {/* Attribution on last page of chapter */}
           {fp.pageIdx === chapter.pages.length - 1 && (
-            <div className="text-right pr-2 sm:pr-4">
-              <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-[#4d3a2b] font-medium">
+            <div className="text-right pr-2 sm:pr-3">
+              <span className="text-[8.5px] sm:text-[9.5px] uppercase tracking-[0.18em] text-[#4d3a2b] font-semibold">
                 — {attribution}
               </span>
             </div>
@@ -502,18 +505,18 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
           {/* Navigation: Prev Page / Next Page */}
           <div className={`flex items-center justify-between px-1 sm:px-2 ${fontClass}`}>
             <span
-              className={`text-[9px] sm:text-[10px] tracking-wider ${
-                hasPrev ? "text-[#6b523c]/60" : "text-transparent"
+              className={`text-[8.5px] sm:text-[9.5px] tracking-wider select-none font-medium ${
+                hasPrev ? "text-[#6b523c]/75 hover:text-[#3a2515]" : "text-transparent"
               }`}
             >
               {isKh ? "‹ ទំព័រមុន" : "‹ Prev Page"}
             </span>
-            <span className="italic text-[9px] sm:text-[10px] tracking-widest text-[#726250]/50">
+            <span className="italic text-[8.5px] sm:text-[9.5px] tracking-widest text-[#726250]/60 select-none">
               — {isKh ? toKhmerNum(flatIdx + 1) : flatIdx + 1} —
             </span>
             <span
-              className={`text-[9px] sm:text-[10px] tracking-wider ${
-                hasNext ? "text-[#6b523c]/60" : "text-transparent"
+              className={`text-[8.5px] sm:text-[9.5px] tracking-wider select-none font-medium ${
+                hasNext ? "text-[#6b523c]/75 hover:text-[#3a2515]" : "text-transparent"
               }`}
             >
               {isKh ? "ទំព័របន្ទាប់ ›" : "Next Page ›"}
@@ -523,7 +526,7 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
 
         {/* Dog-Ear Corner */}
         <div
-          className="absolute bottom-0 right-0 w-5 h-5 pointer-events-none rounded-br-[2px] z-20"
+          className="absolute bottom-0 right-0 w-4 h-4 pointer-events-none rounded-br-[2px] z-20"
           style={{
             background:
               "linear-gradient(135deg, transparent 55%, rgba(145,108,68,0.25) 55%, rgba(145,108,68,0.10) 100%)",
@@ -603,7 +606,7 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
         {/* Book Stage & Page Container */}
         <div
           onClick={handleSheetClick}
-          className="relative z-20 w-full min-h-[340px] sm:min-h-[370px] md:min-h-[390px] rounded-l-[2px] rounded-r-[1px] cursor-pointer shadow-lg overflow-hidden"
+          className="relative z-20 w-full min-h-[380px] sm:min-h-[410px] md:min-h-[430px] rounded-l-[2px] rounded-r-[1px] cursor-pointer shadow-lg overflow-hidden"
           style={{
             perspective: "1600px",
             background: "linear-gradient(145deg, #f7efe1 0%, #eee3cc 50%, #e5d5ba 100%)",
@@ -612,7 +615,13 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
         >
           {/* Base Sheet */}
           <div className="absolute inset-0 z-10">
-            {renderPageSheet(isAnimating ? targetPageIdx : currentPage)}
+            {renderPageSheet(
+              isAnimating
+                ? turnDirection === "next"
+                  ? targetPageIdx
+                  : currentPage
+                : currentPage
+            )}
           </div>
 
           {/* Dynamic Shadow during flip */}
@@ -622,8 +631,8 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
               style={{
                 background:
                   turnDirection === "next"
-                    ? `linear-gradient(90deg, rgba(0,0,0,${(1 - flipProgress) * 0.22}) 0%, transparent 60%)`
-                    : `linear-gradient(270deg, rgba(0,0,0,${(1 - flipProgress) * 0.22}) 0%, transparent 60%)`,
+                    ? `linear-gradient(90deg, rgba(0,0,0,${Math.sin(flipProgress * Math.PI) * 0.24}) 0%, transparent 65%)`
+                    : `linear-gradient(270deg, rgba(0,0,0,${Math.sin(flipProgress * Math.PI) * 0.24}) 0%, transparent 65%)`,
               }}
             />
           )}
@@ -633,12 +642,11 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
             <div
               className="absolute inset-0 z-30 pointer-events-none rounded-[2px]"
               style={{
-                transformOrigin:
-                  turnDirection === "next" ? "left center" : "right center",
+                transformOrigin: "left center",
                 transform:
                   turnDirection === "next"
                     ? `rotateY(${-flipProgress * 180}deg)`
-                    : `rotateY(${(1 - flipProgress) * 180}deg)`,
+                    : `rotateY(${-(1 - flipProgress) * 180}deg)`,
                 transformStyle: "preserve-3d",
                 boxShadow:
                   flipProgress > 0.05 && flipProgress < 0.95
@@ -646,6 +654,7 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
                     : "none",
               }}
             >
+              {/* Front Face: shows the flipping page */}
               <div
                 className="absolute inset-0 rounded-[2px] overflow-hidden"
                 style={{
@@ -658,11 +667,15 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
                 <div
                   className="absolute inset-0 pointer-events-none"
                   style={{
-                    background: `linear-gradient(90deg, rgba(0,0,0,${flipProgress * 0.28}) 0%, transparent 80%)`,
+                    background:
+                      turnDirection === "next"
+                        ? `linear-gradient(90deg, rgba(0,0,0,${flipProgress * 0.28}) 0%, transparent 80%)`
+                        : `linear-gradient(90deg, rgba(0,0,0,${(1 - flipProgress) * 0.28}) 0%, transparent 80%)`,
                   }}
                 />
               </div>
 
+              {/* Back Face: shows the back of the parchment */}
               <div
                 className="absolute inset-0 rounded-[2px] overflow-hidden"
                 style={{
@@ -675,7 +688,10 @@ export default function RealPaperBook({ locale = "en" }: { locale?: string }) {
                 <div
                   className="absolute inset-0"
                   style={{
-                    background: `linear-gradient(270deg, rgba(0,0,0,${(1 - flipProgress) * 0.28}) 0%, transparent 80%)`,
+                    background:
+                      turnDirection === "next"
+                        ? `linear-gradient(270deg, rgba(0,0,0,${(1 - flipProgress) * 0.28}) 0%, transparent 80%)`
+                        : `linear-gradient(270deg, rgba(0,0,0,${flipProgress * 0.28}) 0%, transparent 80%)`,
                   }}
                 />
               </div>

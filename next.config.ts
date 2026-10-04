@@ -5,6 +5,19 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.menglanghuo.online',
+      },
+      {
+        protocol: 'https',
+        hostname: 'menglanghuo.online',
+      },
+    ],
+  },
+  turbopack: {},
 };
 
 const withNextIntl = createNextIntlPlugin();

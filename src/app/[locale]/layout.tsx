@@ -47,14 +47,17 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
+    url: 'https://www.menglanghuo.online',
     siteName: 'Huo Menglang Portfolio',
     title: 'Huo Menglang - Fullstack System Developer',
     description: 'Fullstack System Developer specializing in distributed systems, Spring Boot, Next.js, and cloud architecture. Dedicated to building resilient software crafts.',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://www.menglanghuo.online/og-image.jpg',
+        secureUrl: 'https://www.menglanghuo.online/og-image.jpg',
         width: 1200,
         height: 630,
+        type: 'image/jpeg',
         alt: 'Huo Menglang - Fullstack System Developer Portfolio',
       },
     ],
@@ -63,7 +66,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Huo Menglang - Fullstack System Developer',
     description: 'Fullstack System Developer specializing in distributed systems, Spring Boot, Next.js, and cloud architecture. Dedicated to building resilient software crafts.',
-    images: ['/og-image.png'],
+    images: ['https://www.menglanghuo.online/og-image.jpg'],
+  },
+  other: {
+    'telegram:channel': '@Menglang_HUO',
   },
 }
 
