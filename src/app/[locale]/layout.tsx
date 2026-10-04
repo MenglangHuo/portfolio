@@ -15,7 +15,7 @@ import './globals.css'
 const Kantumruy = Kantumruy_Pro({ subsets: ['khmer', 'latin'] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://portfolio-huomenglang.vercel.app'),
+  metadataBase: new URL('https://www.menglanghuo.online'),
   title: {
     default: 'Huo Menglang - Fullstack System Developer',
     template: '%s - Huo Menglang Portfolio',

@@ -26,10 +26,10 @@ const CHAPTERS: Chapter[] = [
   {
     chapterEn: "Chapter I",
     chapterKh: "ជំពូកទី ១",
-    titleEn: "My Journey With Code",
-    titleKh: "ដំំណើរជីវិតជាមួយកូដ",
+    titleEn: "My Journey With Cdoing",
+    titleKh: "ដំំណើរជីវិតជាមួយការសរសេរកូដ",
     attributionEn: "HUO MENGLANG",
-    attributionKh: "ហួ ម៉េងឡាំង",
+    attributionKh: "ហួ ម៉េងឡាង",
     pages: [
       {
         paragraphsEn: [
@@ -59,16 +59,16 @@ const CHAPTERS: Chapter[] = [
     titleEn: "MIND & DISCIPLINE",
     titleKh: "ស្មារតី និង វិន័យ",
     attributionEn: "HUO MENGLANG",
-    attributionKh: "ហួ ម៉េងឡាំង",
+    attributionKh: "ហួ ម៉េងឡាង",
     pages: [
       {
         paragraphsEn: [
-          "Early dawn welcomes quiet pages and mindful reflection, beginning each sunrise with stillness, clarity, and purpose. Beyond the glowing terminal, Karate-Do anchors the spirit, instilling mental fortitude, physical endurance, and calm focus.",
+          "Beginning each sunrise with stillness, clarity, and purpose. Entertainments are part of my life like Listent to music adventure and Sports, Karate-Do is one of my favourite sport that anchors the spirit, instilling mental fortitude, physical endurance, and calm focus.",
           "For true engineering mirrors the martial art — patience in every posture, precision in every movement. Constantly refining what is within, striving for harmony in mind, body, and work.",
         ],
         paragraphsKh: [
-          "ព្រឹកព្រលឹមស្វាគមន៍ទំព័រសៀវភៅ និងការផ្ដោតស្មារតី ចាប់ផ្តើមថ្ងៃថ្មីនីមួយៗដោយភាពស្ងប់ស្ងាត់ និងទិសដៅច្បាស់លាស់។ លើសពីអេក្រង់កូដ Karate-Do ជួយពង្រឹងស្មារតី បណ្តុះនូវការអត់ធ្មត់ ភាពធន់នៃរាងកាយ និងការផ្ដោតអារម្មណ៍។",
-          "ព្រោះវិស្វកម្មកម្មវិធី ក៏ប្រៀបដូចជាក្បាច់គុន — អត់ធ្មត់គ្រប់កាលៈទេសៈ ហ្មត់ចត់គ្រប់ចលនា។ កែលម្អខ្លួនជាប្រចាំ ដើម្បីភាពចុះសម្រុងរវាងចិត្ត កាយ និងការងារ។",
+          "ចាប់ផ្តើមថ្ងៃថ្មីនីមួយៗដោយភាពស្ងប់ស្ងាត់ និងទិសដៅច្បាស់លាស់។ ការកម្សាន្តជាផ្នែកមួយធ្វើអោយជីវិតមានភាពរីករាយដូចជាការស្តាប់ចម្រៀង ទៅកន្លែងដែលចង់ទៅ និងការលេងជាដើម។​ កីឡាការ៉ាតេដូជាផ្នែកមួយនៃការកម្សាន្ត ជួយពង្រឹងស្មារតី បណ្តុះនូវការអត់ធ្មត់ ភាពធន់នៃរាងកាយ និងការផ្ដោតអារម្មណ៍។",
+          "ព្រោះការបង្កើតកម្មវិធី ក៏ប្រៀបដូចជាក្បាច់គុន — អត់ធ្មត់គ្រប់កាលៈទេសៈ ហ្មត់ចត់គ្រប់ចលនា។ កែលម្អខ្លួនជាប្រចាំ ដើម្បីភាពចុះសម្រុងរវាងចិត្ត កាយ និងការងារ។",
         ],
       },
     ],
@@ -79,7 +79,7 @@ const CHAPTERS: Chapter[] = [
     titleEn: "LOVING-KINDNESS",
     titleKh: "មេត្តាធម៌",
     attributionEn: "HUO MENGLANG",
-    attributionKh: "ហួ ម៉េងឡាំង",
+    attributionKh: "ហួ ម៉េងឡាង",
     pages: [
       {
         paragraphsEn: [
@@ -99,7 +99,7 @@ const CHAPTERS: Chapter[] = [
     titleEn: "MINDFULNESS & AWARENESS",
     titleKh: "សតិ សម្បជញ្ញៈ",
     attributionEn: "HUO MENGLANG",
-    attributionKh: "ហួ ម៉េងឡាំង",
+    attributionKh: "ហួ ម៉េងឡាង",
     pages: [
       {
         paragraphsEn: [
@@ -129,7 +129,7 @@ const CHAPTERS: Chapter[] = [
     titleEn: "THE FOUR BONDS OF KINDNESS",
     titleKh: "សង្គហធម៌ ៤ យ៉ាង",
     attributionEn: "HUO MENGLANG",
-    attributionKh: "ហួ ម៉េងឡាំង",
+    attributionKh: "ហួ ម៉េងឡាង",
     pages: [
       {
         paragraphsEn: [
@@ -159,7 +159,7 @@ const CHAPTERS: Chapter[] = [
     titleEn: "ACCEPTING LIFE'S TRUTH",
     titleKh: "ការទទួលយកការពិតនៃជីវិត",
     attributionEn: "HUO MENGLANG",
-    attributionKh: "ហួ ម៉េងឡាំង",
+    attributionKh: "ហួ ម៉េងឡាង",
     pages: [
       {
         paragraphsEn: [
@@ -189,7 +189,7 @@ const CHAPTERS: Chapter[] = [
     titleEn: "RIGHT EFFORT",
     titleKh: "ការព្យាយាមដ៏ត្រឹមត្រូវ",
     attributionEn: "HUO MENGLANG",
-    attributionKh: "ហួ ម៉េងឡាំង",
+    attributionKh: "ហួ ម៉េងឡាង",
     pages: [
       {
         paragraphsEn: [
@@ -219,7 +219,7 @@ const CHAPTERS: Chapter[] = [
     titleEn: "BEING A GOOD PERSON",
     titleKh: "ការធ្វើជាមនុស្សល្អ",
     attributionEn: "HUO MENGLANG",
-    attributionKh: "ហួ ម៉េងឡាំង",
+    attributionKh: "ហួ ម៉េងឡាង",
     pages: [
       {
         paragraphsEn: [
