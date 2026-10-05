@@ -50,8 +50,8 @@ export default function Info({ data, contacts, locale = 'en' }: InfoProps) {
                         {/* Circular Profile Photo Frame — interactive trigger with clear visual feedback */}
                         <button
                             onClick={() => setGalleryOpen(true)}
-                            aria-label={locale === 'kh' ? 'មើលកម្រងរូបភាព និង ២៣ ពេលវេលា' : 'View 23 moments and photo collections'}
-                            title={locale === 'kh' ? 'ចុចដើម្បីមើលកម្រងរូបភាព និងរូបថត' : 'Click to explore visual journal & collections'}
+                            aria-label={locale === 'kh' ? 'មើលកម្រងរូបភាព' : 'View visual journal'}
+                            title={locale === 'kh' ? 'ចុចដើម្បីមើលកម្រងរូបភាព' : 'Click to explore visual journal'}
                             className={cn(
                                 'relative z-10 w-full h-full rounded-full overflow-hidden',
                                 'border-[2px] md:border-[2.5px] border-[#8d7c65]/60 dark:border-white/20',
@@ -102,7 +102,7 @@ export default function Info({ data, contacts, locale = 'en' }: InfoProps) {
                         {/* Interactive Floating Pill Badge at Bottom of Avatar */}
                         <button
                             onClick={() => setGalleryOpen(true)}
-                            aria-label={locale === 'kh' ? 'បើកកម្រងរូបភាព ២៣ ពេលវេលា' : 'Open 23 Moments Visual Journal'}
+                            aria-label={locale === 'kh' ? 'បើកកម្រងរូបភាព' : 'Visual Journal'}
                             className={cn(
                                 'absolute -bottom-3 left-1/2 -translate-x-1/2 z-20 cursor-pointer',
                                 'backdrop-blur-md bg-main-light/95 dark:bg-alter/95',
@@ -116,7 +116,7 @@ export default function Info({ data, contacts, locale = 'en' }: InfoProps) {
                         >
                             <LotusIcon className="w-4 h-4 text-ochre flex-shrink-0 animate-pulse" />
                             <span className={cn("text-[11px] font-semibold text-alter dark:text-main tracking-tight whitespace-nowrap", locale === 'kh' && 'font-hanuman')}>
-                                {locale === 'kh' ? '២៣ ពេលវេលា' : '23 Moments'}
+                                {locale === 'kh' ? '២៣ អនុស្សាវរីយ៍' : '23 Moments'}
                             </span>
                             <span className="inline-block size-1.5 rounded-full bg-ochre animate-ping" />
                         </button>
