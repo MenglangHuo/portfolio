@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+    <defs>
+        <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFFBF2"/>
+            <stop offset="70%" stop-color="#F6EEDF"/>
+            <stop offset="100%" stop-color="#EFE5D3"/>
+        </radialGradient>
+        <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#E2D5BE"/>
+            <stop offset="100%" stop-color="#C8B69B"/>
+        </linearGradient>
+    </defs>
+
+    <!-- Squircle Card Background matching Portfolio Scrapbook Parchment -->
+    <rect width="100" height="100" rx="22" fill="url(#halo)" stroke="url(#borderGrad)" stroke-width="3"/>
+    
+    <!-- Fine Circular Accent Ring -->
+    <circle cx="50" cy="50" r="39" fill="none" stroke="#D4C4AA" stroke-width="1.5" opacity="0.75"/>
+
+    <!-- Lotus Icon Motif centered -->
+    <g transform="translate(16, 16) scale(2.833)" stroke="#9A4204" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        <!-- Center Crown Petal -->
+        <path d="M12 2.5C10.5 5.5 10 8.5 12 11.5C14 8.5 13.5 5.5 12 2.5Z" fill="#D97706" fill-opacity="0.45"/>
+        <!-- Inner Left Petal -->
+        <path d="M12 11.5C9.5 9.8 7.2 10.2 6 12C7.2 14.5 9.8 15.2 12 13.5" fill="#D97706" fill-opacity="0.28"/>
+        <!-- Inner Right Petal -->
+        <path d="M12 11.5C14.5 9.8 16.8 10.2 18 12C16.8 14.5 14.2 15.2 12 13.5" fill="#D97706" fill-opacity="0.28"/>
+        <!-- Upper Left & Right Petals -->
+        <path d="M12 11.5C9.8 8 7 7.2 4.8 8.8C5.5 12.2 9 14 12 13" fill="#D97706" fill-opacity="0.15"/>
+        <path d="M12 11.5C14.2 8 17 7.2 19.2 8.8C18.5 12.2 15 14 12 13" fill="#D97706" fill-opacity="0.15"/>
+        <!-- Outer Lower Petals -->
+        <path d="M8 15C5.5 14.5 3.5 15.5 3 17C5.5 18.5 8.5 18 10 16" fill="#D97706" fill-opacity="0.15"/>
+        <path d="M16 15C18.5 14.5 20.5 15.5 21 17C18.5 18.5 15.5 18 14 16" fill="#D97706" fill-opacity="0.15"/>
+        <!-- Central Core Seed -->
+        <circle cx="12" cy="11.2" r="1.2" fill="#9A4204"/>
+        <!-- Base Calm Pad / Water Ripple -->
+        <path d="M5 20.5C9 21.5 15 21.5 19 20.5" stroke="#9A4204" stroke-width="1.4" opacity="0.7"/>
+    </g>
+</svg>
