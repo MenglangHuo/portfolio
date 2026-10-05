@@ -66,7 +66,7 @@ export default function Info({ data, contacts, locale = 'en' }: InfoProps) {
                                 src={`/assets/images/${data.image}`}
                                 alt={data.name || "Huo Menglang"}
                                 fill
-                                unoptimized
+                                sizes="(max-width: 768px) 160px, 200px"
                                 className='object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110'
                                 priority
                             />

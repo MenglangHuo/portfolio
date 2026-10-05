@@ -22,6 +22,7 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import LotusIcon from '@/components/icons/LotusIcon';
+import { GALLERY_BLUR_MAP, DEFAULT_BLUR_DATA } from '@/shared/constants/gallery-blur-data';
 
 /* =====================================================================
    GALLERY DATA (23 MOMENTS)
@@ -44,9 +45,10 @@ export interface GalleryItem {
     dateKh: string;
     rotation: number;
     tapeColor?: string;
+    blurDataURL?: string;
 }
 
-const GALLERY_COLLECTION: GalleryItem[] = [
+const RAW_GALLERY_COLLECTION: GalleryItem[] = [
     {
         id: 'collection-1',
         src: '/assets/about-me/collection-1.jpg',
@@ -463,6 +465,84 @@ const GALLERY_COLLECTION: GalleryItem[] = [
     },
 ];
 
+const GALLERY_COLLECTION: GalleryItem[] = RAW_GALLERY_COLLECTION.map((item) => ({
+    ...item,
+    blurDataURL: GALLERY_BLUR_MAP[item.id] || DEFAULT_BLUR_DATA,
+}));
+
+interface PolaroidCardImageProps {
+    img: GalleryItem;
+    title: string;
+    tag: string;
+    index: number;
+    isKh: boolean;
+    onContextMenu: (e: React.MouseEvent) => void;
+}
+
+function PolaroidCardImage({
+    img,
+    title,
+    tag,
+    index,
+    isKh,
+    onContextMenu,
+}: PolaroidCardImageProps) {
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    return (
+        <div className="relative aspect-[4/3] sm:aspect-square overflow-hidden bg-[#ECE3D2] dark:bg-[#23201C] rounded-[1px] shadow-inner select-none">
+            {/* Ambient placeholder shimmer / skeleton while loading */}
+            {!isLoaded && (
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse pointer-events-none z-5" />
+            )}
+
+            <Image
+                src={img.src}
+                alt={title}
+                fill
+                sizes="(max-width: 640px) 95vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                placeholder="blur"
+                blurDataURL={img.blurDataURL || DEFAULT_BLUR_DATA}
+                priority={index < 4}
+                draggable={false}
+                onDragStart={(e) => e.preventDefault()}
+                onLoad={() => setIsLoaded(true)}
+                className={cn(
+                    'object-cover transition-all duration-700 ease-out select-none pointer-events-none group-hover:scale-106',
+                    isLoaded
+                        ? 'blur-0 scale-100 opacity-100'
+                        : 'blur-md scale-105 opacity-90'
+                )}
+            />
+
+            {/* Transparent Anti-Download Shield */}
+            <div
+                className="absolute inset-0 z-10 select-none cursor-pointer"
+                onContextMenu={onContextMenu}
+                onDragStart={(e) => e.preventDefault()}
+            />
+
+            {/* Gloss & Shimmer Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 pointer-events-none z-15" />
+
+            {/* Hover Action Badge */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-300 flex items-center justify-center z-20 pointer-events-none">
+                <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 bg-black/75 backdrop-blur-md text-white py-1.5 px-3 rounded-full text-[11px] font-medium flex items-center gap-1.5 shadow-lg border border-white/20">
+                    <Maximize2 className="w-3.5 h-3.5 text-ochre-light" />
+                    <span>{isKh ? 'ពង្រីក' : 'Enlarge'}</span>
+                </div>
+            </div>
+
+            {/* Corner Tag */}
+            <div className="absolute top-2 right-2 z-20 pointer-events-none">
+                <span className="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded bg-black/60 backdrop-blur-sm text-white/90">
+                    #{tag}
+                </span>
+            </div>
+        </div>
+    );
+}
+
 interface PhotoGalleryProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
@@ -481,6 +561,11 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
     const fontClass = isKh ? 'font-hanuman' : 'font-antique';
 
     const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+    const [lightboxLoaded, setLightboxLoaded] = useState(false);
+
+    useEffect(() => {
+        setLightboxLoaded(false);
+    }, [lightboxIndex]);
     const [isZoomed, setIsZoomed] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [slideProgress, setSlideProgress] = useState(0);
@@ -760,43 +845,15 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
                                                 }}
                                             />
 
-                                            {/* Photo container with Transparent Shield against downloads */}
-                                            <div className="relative aspect-[4/3] sm:aspect-square overflow-hidden bg-neutral-200 dark:bg-neutral-800 rounded-[1px] shadow-inner select-none">
-                                                <Image
-                                                    src={img.src}
-                                                    alt={title}
-                                                    fill
-                                                    unoptimized
-                                                    draggable={false}
-                                                    onDragStart={(e) => e.preventDefault()}
-                                                    className="object-cover transition-transform duration-500 group-hover:scale-106 select-none pointer-events-none"
-                                                />
-
-                                                {/* Transparent Anti-Download Shield */}
-                                                <div
-                                                    className="absolute inset-0 z-10 select-none cursor-pointer"
-                                                    onContextMenu={handleShieldContextMenu}
-                                                    onDragStart={(e) => e.preventDefault()}
-                                                />
-
-                                                {/* Gloss & Shimmer Overlay */}
-                                                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/20 pointer-events-none z-15" />
-
-                                                {/* Hover Action Badge */}
-                                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-300 flex items-center justify-center z-20 pointer-events-none">
-                                                    <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 bg-black/75 backdrop-blur-md text-white py-1.5 px-3 rounded-full text-[11px] font-medium flex items-center gap-1.5 shadow-lg border border-white/20">
-                                                        <Maximize2 className="w-3.5 h-3.5 text-ochre-light" />
-                                                        <span>{isKh ? 'ពង្រីក' : 'Enlarge'}</span>
-                                                    </div>
-                                                </div>
-
-                                                {/* Corner Tag */}
-                                                <div className="absolute top-2 right-2 z-20 pointer-events-none">
-                                                    <span className="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded bg-black/60 backdrop-blur-sm text-white/90">
-                                                        #{tag}
-                                                    </span>
-                                                </div>
-                                            </div>
+                                            {/* Photo container with Progressive Blur-Up & Anti-Download Shield */}
+                                            <PolaroidCardImage
+                                                img={img}
+                                                title={title}
+                                                tag={tag}
+                                                index={index}
+                                                isKh={isKh}
+                                                onContextMenu={handleShieldContextMenu}
+                                            />
 
                                             {/* Handwritten style bottom chin */}
                                             <div className="mt-3 px-1 text-center">
@@ -1003,17 +1060,27 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
                                                 ? { duration: 3.2, ease: 'easeInOut' }
                                                 : { duration: 0.3 }
                                         }
-                                        className="relative"
+                                        className="relative flex items-center justify-center"
                                     >
                                         <Image
+                                            key={activeImage.id}
                                             src={activeImage.src}
                                             alt={isKh ? activeImage.titleKh : activeImage.titleEn}
                                             width={activeImage.width}
                                             height={activeImage.height}
-                                            unoptimized
+                                            placeholder="blur"
+                                            blurDataURL={activeImage.blurDataURL || DEFAULT_BLUR_DATA}
+                                            priority
+                                            sizes="(max-width: 768px) 95vw, (max-width: 1400px) 85vw, 1200px"
                                             draggable={false}
                                             onDragStart={(e) => e.preventDefault()}
-                                            className="max-w-full max-h-[72vh] w-auto h-auto object-contain rounded-lg shadow-[0_20px_50px_rgba(0,0,0,0.85)] pointer-events-none select-none"
+                                            onLoad={() => setLightboxLoaded(true)}
+                                            className={cn(
+                                                'max-w-full max-h-[72vh] w-auto h-auto object-contain rounded-lg shadow-[0_20px_50px_rgba(0,0,0,0.85)] pointer-events-none select-none transition-all duration-500 ease-out',
+                                                lightboxLoaded
+                                                    ? 'blur-0 scale-100 opacity-100'
+                                                    : 'blur-md scale-102 opacity-95'
+                                            )}
                                         />
                                     </motion.div>
 
@@ -1084,7 +1151,9 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
                                                 src={item.src}
                                                 alt={isKh ? item.titleKh : item.titleEn}
                                                 fill
-                                                unoptimized
+                                                placeholder="blur"
+                                                blurDataURL={item.blurDataURL || DEFAULT_BLUR_DATA}
+                                                sizes="80px"
                                                 draggable={false}
                                                 onDragStart={(e) => e.preventDefault()}
                                                 className="object-cover pointer-events-none select-none"
