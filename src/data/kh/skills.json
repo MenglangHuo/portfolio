@@ -10,10 +10,6 @@
                 "title": "SpringBoot Microservice",
                 "icon": "springboot.svg"
             },
-            {
-                "title": "FastAPI",
-                "icon": "fastapi.svg"
-            },
              {
                 "title": "VueJS",
                 "icon": "vuejs.svg"
