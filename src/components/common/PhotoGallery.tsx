@@ -497,16 +497,16 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
     }, [lightboxIndex]);
 
     const closeLightbox = useCallback(() => {
+        setIsPlaying(false);
         setLightboxIndex(null);
         setIsZoomed(false);
-        setIsPlaying(false);
         setSlideProgress(0);
     }, []);
 
     const goNext = useCallback(() => {
         setDirection(1);
         setLightboxIndex((prev) => {
-            if (prev === null) return 0;
+            if (prev === null) return null;
             return (prev + 1) % GALLERY_COLLECTION.length;
         });
         setIsZoomed(false);
@@ -516,7 +516,7 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
     const goPrev = useCallback(() => {
         setDirection(-1);
         setLightboxIndex((prev) => {
-            if (prev === null) return 0;
+            if (prev === null) return null;
             return (prev - 1 + GALLERY_COLLECTION.length) % GALLERY_COLLECTION.length;
         });
         setIsZoomed(false);
@@ -646,42 +646,44 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
                     {/* =========================================================
                         GALLERY HEADER (Bilingual Khmer / English, Lotus Emblem & Slideshow Trigger)
                         ========================================================= */}
-                    <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 px-5 sm:px-7 pt-4 pb-3.5 border-b border-[#8d7c65]/20 dark:border-white/10 bg-inherit/90 backdrop-blur-md">
+                    <div className="relative z-10 flex items-center justify-between gap-2 sm:gap-4 px-3.5 sm:px-7 py-3 sm:py-3.5 border-b border-[#8d7c65]/20 dark:border-white/10 bg-inherit/90 backdrop-blur-md flex-nowrap">
                         {/* Title and Lotus Emblem */}
-                        <div className="flex items-center space-x-3.5">
-                            <div className="size-10 rounded-xl bg-ochre/15 dark:bg-ochre/25 flex items-center justify-center text-ochre border border-ochre/30 shadow-inner">
-                                <LotusIcon className="w-5 h-5 animate-pulse text-ochre" />
+                        <div className="flex items-center space-x-2.5 sm:space-x-3.5 min-w-0 flex-1 mr-1 sm:mr-2">
+                            <div className="size-8 sm:size-10 rounded-xl bg-ochre/15 dark:bg-ochre/25 flex items-center justify-center text-ochre border border-ochre/30 shadow-inner flex-shrink-0">
+                                <LotusIcon className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse text-ochre" />
                             </div>
-                            <div>
+                            <div className="min-w-0">
                                 <DialogTitle className={cn(
-                                    "text-xl sm:text-2xl font-bold text-alter dark:text-main tracking-wide flex items-center gap-2",
+                                    "text-sm sm:text-lg font-bold dark:text-main leading-tight truncate",
                                     fontClass
                                 )}>
                                     {isKh
-                                        ? 'ទិនានុប្បវត្តិរូបភាព & កម្រងអនុស្សាវរីយ៍'
-                                        : 'Visual Journal & Scrapbook'}
+                                        ? 'កម្រងអនុស្សាវរីយ៍'
+                                        : 'Visual Journal'}
                                 </DialogTitle>
-                                <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 font-sans mt-0.5">
+                                <p className="text-[11px] sm:text-xs text-neutral-600 dark:text-neutral-400 font-sans truncate">
                                     {isKh
-                                        ? `ការចងក្រងនូវរាល់អនុស្សាវរីយ៍ & ពេលវេលាដ៏មានតម្លៃ • ${toKhmerNum(GALLERY_COLLECTION.length)} រូបថត`
-                                        : `Curated memories & moments • ${GALLERY_COLLECTION.length} Photographs`}
+                                        ? `ការចងក្រងនូវរូបអនុស្សាវរីយ៍ល្អៗ`
+                                        : `Curated memories & moments`}
                                 </p>
                             </div>
                         </div>
 
-                        {/* Right: Slideshow Trigger & Close Button */}
-                        <div className="flex items-center gap-2.5">
+                        {/* Right: Slideshow Trigger & Close Button (Always on same row, never wraps) */}
+                        <div className="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
                             {/* Play Slideshow Button */}
                             <button
+                                type="button"
                                 onClick={startSlideshow}
+                                aria-label={isKh ? 'ចាក់ស្លាយរូបថត' : 'Play Slideshow'}
                                 title={isKh ? 'ចាក់ស្លាយរូបថតស្វ័យប្រវត្តិ' : 'Play Fullscreen Slideshow'}
                                 className={cn(
-                                    'px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 flex items-center gap-2',
+                                    'p-2 sm:px-3 sm:py-1.5 rounded-xl text-xs font-medium transition-all duration-200 flex items-center gap-1.5 cursor-pointer touch-manipulation',
                                     'bg-ochre hover:bg-ochre-light text-white shadow-md hover:scale-105 active:scale-95'
                                 )}
                             >
-                                <Play className="w-3.5 h-3.5 fill-white text-white" />
-                                <span>{isKh ? 'ចាក់ស្លាយ' : 'Play Slideshow'}</span>
+                                <Play className="w-4 h-4 fill-white text-white" />
+                                <span className="hidden sm:inline">{isKh ? 'ស្លាយ' : 'Play'}</span>
                             </button>
 
                             <span className="text-[11px] font-mono text-neutral-500 hidden lg:inline">
@@ -690,13 +692,14 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
 
                             {/* Close Button */}
                             <button
+                                type="button"
                                 onClick={() => onOpenChange(false)}
                                 aria-label={isKh ? 'បិទ' : 'Close Gallery'}
                                 title={isKh ? 'បិទ' : 'Close'}
                                 className={cn(
-                                    'p-2 rounded-xl transition-all duration-200',
+                                    'p-2 rounded-xl transition-all duration-200 cursor-pointer touch-manipulation',
                                     'bg-neutral-200/50 hover:bg-neutral-300/70 dark:bg-white/5 dark:hover:bg-white/10',
-                                    'text-neutral-700 dark:text-neutral-200 hover:rotate-90 hover:scale-105',
+                                    'text-neutral-700 dark:text-neutral-200 hover:rotate-90 hover:scale-105 active:scale-95',
                                     'border border-neutral-300/60 dark:border-white/10'
                                 )}
                             >
@@ -822,96 +825,111 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
             {/* =========================================================
                 LIGHTBOX MASTER VIEWER (PROTECTED PHOTOGRAPHY THEATER & SLIDESHOW)
                 ========================================================= */}
-            <AnimatePresence>
-                {lightboxOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.25 }}
-                        className={cn(
-                            "fixed inset-0 z-[120] flex flex-col justify-between bg-black/95 backdrop-blur-2xl text-white select-none",
-                            fontClass
-                        )}
-                        onClick={closeLightbox}
-                        onContextMenu={handleShieldContextMenu}
-                    >
-                        {/* Live Slideshow Timer Progress Bar — cinematic gradient glow */}
-                        {isPlaying && (
-                            <div className="absolute top-0 left-0 right-0 h-1 bg-white/10 z-30 overflow-hidden">
-                                <motion.div
-                                    className="h-full bg-gradient-to-r from-ochre via-amber-400 to-ochre shadow-[0_0_12px_2px_rgba(217,119,6,0.6)]"
-                                    style={{ width: `${slideProgress}%` }}
-                                    transition={{ duration: 0.04, ease: 'linear' }}
-                                />
-                            </div>
-                        )}
-
-                        {/* Top Utility Bar */}
-                        <div
-                            className="relative z-20 flex items-center justify-between px-4 sm:px-8 py-4 bg-gradient-to-b from-black/85 via-black/45 to-transparent"
-                            onClick={(e) => e.stopPropagation()}
+            <DialogPortal>
+                <AnimatePresence>
+                    {lightboxOpen && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className={cn(
+                                "fixed inset-0 z-[150] flex flex-col justify-between bg-black/95 backdrop-blur-2xl text-white select-none pointer-events-auto",
+                                fontClass
+                            )}
+                            onClick={closeLightbox}
+                            onContextMenu={handleShieldContextMenu}
                         >
-                            {/* Left: Info */}
-                            <div className="flex items-center gap-3">
-                                <span className="font-mono text-xs px-2.5 py-1 rounded-md bg-white/10 text-ochre border border-white/10">
-                                    {isKh
-                                        ? `${toKhmerNum(lightboxIndex! + 1)} / ${toKhmerNum(GALLERY_COLLECTION.length)}`
-                                        : `${String(lightboxIndex! + 1).padStart(2, '0')} / ${String(GALLERY_COLLECTION.length).padStart(2, '0')}`}
-                                </span>
-                                <div>
-                                    <h3 className={cn("text-base sm:text-lg font-bold leading-tight", fontClass)}>
+                            {/* Live Slideshow Timer Progress Bar — cinematic gradient glow */}
+                            {isPlaying && (
+                                <div className="absolute top-0 left-0 right-0 h-1 bg-white/10 z-30 overflow-hidden">
+                                    <motion.div
+                                        className="h-full bg-gradient-to-r from-ochre via-amber-400 to-ochre shadow-[0_0_12px_2px_rgba(217,119,6,0.6)]"
+                                        style={{ width: `${slideProgress}%` }}
+                                        transition={{ duration: 0.04, ease: 'linear' }}
+                                    />
+                                </div>
+                            )}
+
+                            {/* Top Utility Bar */}
+                            <div
+                                className="relative z-30 flex items-center justify-between px-4 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-b from-black/90 via-black/50 to-transparent"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                {/* Left: Minimal, Clean Info (No clutter description) */}
+                                <div className="flex items-center gap-2.5 sm:gap-3">
+                                    <span className="font-mono text-xs px-2.5 py-1 rounded-md bg-white/10 text-ochre border border-white/10 select-none">
+                                        {isKh
+                                            ? `${toKhmerNum(lightboxIndex! + 1)} / ${toKhmerNum(GALLERY_COLLECTION.length)}`
+                                            : `${String(lightboxIndex! + 1).padStart(2, '0')} / ${String(GALLERY_COLLECTION.length).padStart(2, '0')}`}
+                                    </span>
+                                    <h3 className={cn("text-sm sm:text-base font-bold leading-tight text-white/95 truncate max-w-[170px] sm:max-w-md", fontClass)}>
                                         {isKh ? activeImage.titleKh : activeImage.titleEn}
                                     </h3>
-                                    <p className="text-xs text-white/60 font-sans mt-0.5 hidden sm:block">
-                                        {isKh ? activeImage.captionKh : activeImage.captionEn}
-                                    </p>
+                                </div>
+
+                                {/* Right: Actions (Play, Zoom, Close) */}
+                                <div className="flex items-center gap-1.5 sm:gap-2">
+                                    {/* Slideshow Play / Pause Button */}
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setIsPlaying((p) => !p);
+                                            setSlideProgress(0);
+                                        }}
+                                        title={isPlaying ? (isKh ? 'ផ្អាកស្លាយ (Space)' : 'Pause Slideshow') : (isKh ? 'ស្លាយ' : 'Play')}
+                                        className={cn(
+                                            'px-2.5 sm:px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-xs font-medium transition-all shadow-md cursor-pointer touch-manipulation',
+                                            isPlaying
+                                                ? 'bg-ochre text-white shadow-ochre/30 scale-105'
+                                                : 'bg-white/10 hover:bg-white/20 text-white/80'
+                                        )}
+                                    >
+                                        {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
+                                        <span className="hidden xs:inline">
+                                            {isPlaying
+                                                ? (isKh ? 'ផ្អាក' : 'Pause')
+                                                : (isKh ? 'ស្លាយ' : 'Play')}
+                                        </span>
+                                    </button>
+
+                                    {/* Zoom Toggle */}
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setIsZoomed((z) => !z);
+                                        }}
+                                        aria-label={isZoomed ? (isKh ? 'បង្រួម' : 'Zoom Out') : (isKh ? 'ពង្រីក' : 'Zoom In')}
+                                        title={isKh ? 'ពង្រីក / បង្រួម' : 'Toggle Zoom'}
+                                        className={cn(
+                                            "p-2 rounded-lg transition-all cursor-pointer touch-manipulation active:scale-95",
+                                            isZoomed ? "bg-ochre text-white shadow-md shadow-ochre/30" : "bg-white/10 hover:bg-white/20 text-white/80"
+                                        )}
+                                    >
+                                        {isZoomed ? <ZoomOut className="w-4 h-4" /> : <ZoomIn className="w-4 h-4" />}
+                                    </button>
+
+                                    {/* Close Button */}
+                                    <button
+                                        type="button"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            closeLightbox();
+                                        }}
+                                        onTouchEnd={(e) => {
+                                            e.stopPropagation();
+                                            closeLightbox();
+                                        }}
+                                        aria-label={isKh ? 'បិទ' : 'Close (Esc)'}
+                                        title={isKh ? 'បិទ (Esc)' : 'Close (Esc)'}
+                                        className="p-2 rounded-lg bg-white/15 hover:bg-white/25 active:scale-95 text-white transition-all hover:rotate-90 ml-1 cursor-pointer touch-manipulation z-30"
+                                    >
+                                        <X className="w-5 h-5" />
+                                    </button>
                                 </div>
                             </div>
-
-                            {/* Right: Actions (No Download Button!) */}
-                            <div className="flex items-center gap-2">
-                                {/* Slideshow Play / Pause Button with live visual state */}
-                                <button
-                                    onClick={() => {
-                                        setIsPlaying((p) => !p);
-                                        setSlideProgress(0);
-                                    }}
-                                    title={isPlaying ? (isKh ? 'ផ្អាកស្លាយ (Space)' : 'Pause Slideshow (Space)') : (isKh ? 'ចាក់ស្លាយ (Space)' : 'Play Slideshow (Space)')}
-                                    className={cn(
-                                        'px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-xs font-medium transition-all shadow-md',
-                                        isPlaying
-                                            ? 'bg-ochre text-white shadow-ochre/30 scale-105'
-                                            : 'bg-white/10 hover:bg-white/20 text-white/80'
-                                    )}
-                                >
-                                    {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
-                                    <span>
-                                        {isPlaying
-                                            ? (isKh ? 'កំពុងចាក់' : 'Playing')
-                                            : (isKh ? 'ចាក់ស្លាយ' : 'Slideshow')}
-                                    </span>
-                                </button>
-
-                                {/* Zoom Toggle */}
-                                <button
-                                    onClick={() => setIsZoomed((z) => !z)}
-                                    title={isKh ? 'ពង្រីក / បង្រួម' : 'Toggle Zoom'}
-                                    className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white/80 transition-all"
-                                >
-                                    {isZoomed ? <ZoomOut className="w-4 h-4" /> : <ZoomIn className="w-4 h-4" />}
-                                </button>
-
-                                {/* Close Button */}
-                                <button
-                                    onClick={closeLightbox}
-                                    title={isKh ? 'បិទ (Esc)' : 'Close (Esc)'}
-                                    className="p-2 rounded-lg bg-white/15 hover:bg-white/25 text-white transition-all hover:rotate-90 ml-1"
-                                >
-                                    <X className="w-5 h-5" />
-                                </button>
-                            </div>
-                        </div>
 
                         {/* Center Stage: Photo with Transparent Anti-Download Shield */}
                         <div
@@ -935,7 +953,13 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
                                         center: {
                                             opacity: 1,
                                             x: 0,
-                                            scale: isZoomed ? 1.4 : 1,
+                                            scale: 1,
+                                            filter: 'blur(0px)',
+                                        },
+                                        zoomed: {
+                                            opacity: 1,
+                                            x: 0,
+                                            scale: 1.5,
                                             filter: 'blur(0px)',
                                         },
                                         exit: (dir: number) => ({
@@ -946,20 +970,20 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
                                         }),
                                     }}
                                     initial="enter"
-                                    animate="center"
+                                    animate={isZoomed ? "zoomed" : "center"}
                                     exit="exit"
                                     transition={{
                                         x: { duration: 0.45, ease: [0.32, 0.72, 0, 1] },
-                                        opacity: { duration: 0.4, ease: 'easeInOut' },
-                                        scale: { duration: 0.5, ease: [0.32, 0.72, 0, 1] },
-                                        filter: { duration: 0.35, ease: 'easeOut' },
+                                        opacity: { duration: 0.35, ease: 'easeInOut' },
+                                        scale: { duration: 0.35, ease: [0.32, 0.72, 0, 1] },
+                                        filter: { duration: 0.3, ease: 'easeOut' },
                                     }}
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         setIsZoomed((z) => !z);
                                     }}
                                     className={cn(
-                                        'relative max-w-[90vw] max-h-[72vh] flex items-center justify-center cursor-zoom-in select-none',
+                                        'relative max-w-[92vw] max-h-[72vh] flex items-center justify-center cursor-zoom-in select-none',
                                         isZoomed && 'cursor-zoom-out'
                                     )}
                                 >
@@ -999,46 +1023,31 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
                                         onContextMenu={handleShieldContextMenu}
                                         onDragStart={(e) => e.preventDefault()}
                                     />
-
-                                    {/* Animated Caption Overlay — fades in from bottom with staggered delay */}
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 16 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.5, delay: 0.25, ease: 'easeOut' }}
-                                        className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none"
-                                    >
-                                        <div className="px-4 py-2 rounded-xl bg-black/60 backdrop-blur-lg border border-white/10 shadow-2xl text-center max-w-[80vw] sm:hidden">
-                                            <p className={cn('text-sm font-semibold text-white/95 truncate', fontClass)}>
-                                                {isKh ? activeImage.titleKh : activeImage.titleEn}
-                                            </p>
-                                            <p className="text-[11px] text-white/60 font-sans mt-0.5 line-clamp-1">
-                                                {isKh ? activeImage.captionKh : activeImage.captionEn}
-                                            </p>
-                                        </div>
-                                    </motion.div>
                                 </motion.div>
                             </AnimatePresence>
 
                             {/* Previous Arrow Button */}
                             <button
+                                type="button"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     goPrev();
                                 }}
                                 aria-label={isKh ? 'រូបថតមុន' : 'Previous Photo'}
-                                className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-md text-white transition-all hover:scale-110 shadow-xl z-20"
+                                className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-white/10 hover:bg-white/25 active:scale-95 backdrop-blur-md text-white transition-all hover:scale-110 shadow-xl z-20 cursor-pointer touch-manipulation"
                             >
                                 <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7" />
                             </button>
 
                             {/* Next Arrow Button */}
                             <button
+                                type="button"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     goNext();
                                 }}
                                 aria-label={isKh ? 'រូបថតបន្ទាប់' : 'Next Photo'}
-                                className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-md text-white transition-all hover:scale-110 shadow-xl z-20"
+                                className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-white/10 hover:bg-white/25 active:scale-95 backdrop-blur-md text-white transition-all hover:scale-110 shadow-xl z-20 cursor-pointer touch-manipulation"
                             >
                                 <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7" />
                             </button>
@@ -1057,13 +1066,15 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
                                     const isCurrent = idx === lightboxIndex;
                                     return (
                                         <button
+                                            type="button"
                                             key={`thumb-${item.id}`}
-                                            onClick={() => {
+                                            onClick={(e) => {
+                                                e.stopPropagation();
                                                 setLightboxIndex(idx);
                                                 setSlideProgress(0);
                                             }}
                                             className={cn(
-                                                'relative flex-shrink-0 h-12 w-16 sm:h-14 sm:w-20 rounded-md overflow-hidden transition-all duration-200 select-none',
+                                                'relative flex-shrink-0 h-12 w-16 sm:h-14 sm:w-20 rounded-md overflow-hidden transition-all duration-200 select-none cursor-pointer',
                                                 isCurrent
                                                     ? 'ring-2 ring-ochre scale-110 opacity-100 shadow-md'
                                                     : 'opacity-40 hover:opacity-85 hover:scale-105'
@@ -1086,6 +1097,7 @@ export default function PhotoGallery({ open, onOpenChange, locale = 'en' }: Phot
                     </motion.div>
                 )}
             </AnimatePresence>
-        </Dialog>
+        </DialogPortal>
+    </Dialog>
     );
 }

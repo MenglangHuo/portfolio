@@ -26,8 +26,8 @@ const CHAPTERS: Chapter[] = [
   {
     chapterEn: "Chapter I",
     chapterKh: "ជំពូកទី ១",
-    titleEn: "My Journey With Cdoing",
-    titleKh: "ដំំណើរជីវិតជាមួយការសរសេរកូដ",
+    titleEn: "My Journey with Coding",
+    titleKh: "ដំំណើរជាមួយការសរសេរកូដ",
     attributionEn: "HUO MENGLANG",
     attributionKh: "ហួ ម៉េងឡាង",
     pages: [

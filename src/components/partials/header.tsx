@@ -1,6 +1,7 @@
 'use client'
 
 import LangSwitcher from './lang-switcher'
+import LotusIcon from '@/components/icons/LotusIcon'
 import { Link, usePathname } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
@@ -18,9 +19,16 @@ export default function Header({ data }: { data: Common }) {
     const currentPath = pathname?.split('/')[1]
 
     return (
-        <header className='sticky top-0 left-0 w-full z-20 pointer-events-none'>
-            {/* Mobile: only lang switcher floating top-right */}
-            <div className='md:hidden flex justify-end px-3 py-2 pointer-events-auto'>
+        <header className='sticky top-0 left-0 w-full z-40 pointer-events-none'>
+            {/* Mobile: Lotus icon on the left, lang switcher on the right */}
+            <div className='md:hidden flex items-center justify-between px-3.5 py-2 pointer-events-auto'>
+                <Link
+                    href='/'
+                    className='flex items-center justify-center size-9 rounded-xl transition-all touch-manipulation bg-main-mid-light/80 dark:bg-alter-light/60 backdrop-blur-md hover:bg-main dark:hover:bg-alter-light border border-main-dark/20 dark:border-alter-light/40 text-ochre active:scale-95 shadow-sm'
+                    aria-label='Home'
+                >
+                    <LotusIcon className='w-5 h-5 text-ochre' />
+                </Link>
                 <LangSwitcher />
             </div>
 
@@ -30,15 +38,17 @@ export default function Header({ data }: { data: Common }) {
                     <div className='flex items-center justify-between'>
                         {/* Logo + Status */}
                         <div className='flex items-center gap-2'>
-                            <span className='text-xl'>
-                                {data.logo.icon}
-                            </span>
                             <Link
-                                className='text-ochre text-lg font-semibold transition-colors hover:text-ochre-dark'
                                 href='/'
+                                className='flex items-center gap-2 group'
+                                aria-label='Home'
                             >
-                                <span className='sr-only'>Home</span>
-                                {data.logo.text}
+                                <span className='p-1.5 rounded-xl bg-ochre/15 dark:bg-ochre/25 text-ochre border border-ochre/30 group-hover:bg-ochre/25 group-hover:border-ochre/50 shadow-sm transition-all duration-300'>
+                                    <LotusIcon className='w-5 h-5 text-ochre transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6' />
+                                </span>
+                                <span className='text-ochre text-lg font-semibold transition-colors group-hover:text-ochre-dark'>
+                                    {data.logo.text}
+                                </span>
                             </Link>
                             <div className='flex items-center gap-1.5 ml-2 pl-2 border-l border-main-dark/15 dark:border-alter-light/20'>
                                 <span className='relative flex size-1.5'>

@@ -19,15 +19,19 @@ export default function LangSwitcher() {
 
   const locales = routing.locales;
 
-  // Close dropdown on outside click
+  // Close dropdown on outside click or touch
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside, { passive: true });
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
   }, []);
 
   const handleChangeLang = (code: Locale) => {
@@ -41,15 +45,15 @@ export default function LangSwitcher() {
   const current = FLAGS[locale] || FLAGS.en;
 
   return (
-    <div ref={dropdownRef} className="relative">
+    <div ref={dropdownRef} className="relative z-50">
       <button
         onClick={() => setOpen(!open)}
         className={cn(
-          "flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl transition-all",
+          "flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl transition-all touch-manipulation",
           "bg-main-mid-light/80 dark:bg-alter-light/60",
           "hover:bg-main dark:hover:bg-alter-light",
           "border border-main-dark/20 dark:border-alter-light/40",
-          "text-sm cursor-pointer select-none"
+          "text-sm cursor-pointer select-none active:scale-95"
         )}
         aria-label="Switch language"
       >
@@ -71,8 +75,8 @@ export default function LangSwitcher() {
       {open && (
         <div
           className={cn(
-            "absolute right-0 top-full mt-1.5 z-50 min-w-[140px]",
-            "rounded-xl overflow-hidden shadow-lg",
+            "absolute right-0 top-full mt-1.5 z-[60] min-w-[145px]",
+            "rounded-xl overflow-hidden shadow-xl",
             "bg-main-light/95 dark:bg-alter-mid-light/95 backdrop-blur-md",
             "border border-main-dark/20 dark:border-alter-light/40",
             "animate-in fade-in-0 zoom-in-95 duration-150"
@@ -84,18 +88,19 @@ export default function LangSwitcher() {
             return (
               <button
                 key={code}
+                type="button"
                 onClick={() => handleChangeLang(code)}
                 className={cn(
-                  "w-full flex items-center gap-2.5 px-3.5 py-2.5 text-sm transition-colors cursor-pointer",
-                  "text-alter dark:text-main",
-                  "hover:bg-main-mid dark:hover:bg-alter-light",
-                  isActive && "bg-main-mid/70 dark:bg-alter-light/50"
+                  "w-full flex items-center gap-2.5 px-3.5 py-3 sm:py-2.5 text-sm transition-colors cursor-pointer touch-manipulation",
+                  "text-alter dark:text-main text-left",
+                  "hover:bg-main-mid dark:hover:bg-alter-light active:bg-main-mid/90",
+                  isActive && "bg-main-mid/70 dark:bg-alter-light/50 font-semibold"
                 )}
               >
                 <span className="text-base leading-none">{item.flag}</span>
-                <span className="font-medium">{item.label}</span>
+                <span className={cn("font-medium", code === 'kh' && "font-hanuman")}>{item.label}</span>
                 {isActive && (
-                  <svg className="w-3.5 h-3.5 ml-auto text-alter/50 dark:text-main/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <svg className="w-3.5 h-3.5 ml-auto text-alter/70 dark:text-main/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
                 )}

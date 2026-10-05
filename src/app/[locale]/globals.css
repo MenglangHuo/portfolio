@@ -508,16 +508,33 @@ body {
 @keyframes profile-luxury-aura {
   0%, 100% {
     transform: scale(1);
-    opacity: 0.55;
+    opacity: 0.45;
   }
   50% {
-    transform: scale(1.04);
-    opacity: 0.85;
+    transform: scale(1.03);
+    opacity: 0.70;
+  }
+}
+
+@keyframes profile-luxury-aura-mobile {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.20;
+  }
+  50% {
+    transform: scale(1.015);
+    opacity: 0.35;
   }
 }
 
 .profile-luxury-aura {
-  animation: profile-luxury-aura 4s ease-in-out infinite;
+  animation: profile-luxury-aura-mobile 4s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .profile-luxury-aura {
+    animation: profile-luxury-aura 4s ease-in-out infinite;
+  }
 }
 
 /* Gallery scroll area custom scrollbar */

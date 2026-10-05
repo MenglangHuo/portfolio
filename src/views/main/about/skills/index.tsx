@@ -42,7 +42,7 @@ const SkillCategoryItem: React.FC<SkillCategoryItemProps> = ({ category, id, isK
                 <p className='text-xs md:text-sm text-alter-light/70 dark:text-main-light/60 mt-0.5 mb-4'>
                     {category.folder === 'backend'
                         ? (isKh ? 'ស្ថាបត្យកម្មប្រព័ន្ធកម្រិតខ្ពស់ Backend & Frontend' : 'Enterprise architecture, distributed microservices & modern web')
-                        : (isKh ? 'ដំណើរការគ្រប់គ្រងម៉ាស៊ីនមេន បណ្តាញ និងពពក' : 'Cloud orchestration, containerization & infrastructure')}
+                        : (isKh ? 'ដំណើរការគ្រប់គ្រងម៉ាស៊ីនមេ និងពពក' : 'Cloud orchestration, containerization & infrastructure')}
                 </p>
 
                 {/* Interactive Listing (No cards, no boxes) */}

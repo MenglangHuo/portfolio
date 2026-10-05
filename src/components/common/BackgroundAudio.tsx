@@ -3,7 +3,10 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { VolumeX } from "lucide-react";
 
-const TARGET_VOLUME = 0.20; // 20% of original volume
+// Audio file is physically mastered to 25% volume (-12.3dB) so that on iOS/Safari/mobile,
+// even if user turns their device volume up, it stays gentle (20-25%).
+// TARGET_VOLUME 0.80 matches desktop/Android playback to this gentle ambient level.
+const TARGET_VOLUME = 0.80;
 
 export default function BackgroundAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -12,8 +15,8 @@ export default function BackgroundAudio() {
 
   useEffect(() => {
     const audio = new Audio("/assets/audio/sound-background.mp3");
-    audio.volume = TARGET_VOLUME; // 20% of original volume
-    audio.loop = true; // loop when finished playing
+    audio.volume = TARGET_VOLUME;
+    audio.loop = true;
     audioRef.current = audio;
 
     let cleanupListeners: (() => void) | null = null;
@@ -85,7 +88,7 @@ export default function BackgroundAudio() {
       <button
         onClick={togglePlay}
         aria-label={isPlaying ? "Pause healing sound" : "Play healing sound"}
-        title={isPlaying ? "Healing Sound · Playing (20% volume)" : "Healing Sound · Click to Play"}
+        title={isPlaying ? "Healing Sound · Playing (gentle 20-25% volume)" : "Healing Sound · Click to Play"}
         className="group relative flex items-center gap-2 px-3 py-2 rounded-full border border-[#cfc3ad] bg-[#f8f4eb]/90 hover:bg-[#efe6d5] shadow-md backdrop-blur-sm transition-all duration-300 hover:scale-105"
       >
         {/* Animated Sound Wave or Music Note Indicator */}
